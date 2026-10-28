@@ -1,4 +1,4 @@
-import { Text, View,Button } from "react-native";
+import { Text, View,Button,Alert } from "react-native";
 import BadgerSaleItem from "./BadgerSaleItem";
 import {useState, useEffect} from "react"
 import CS571 from '@cs571/mobile-client'
@@ -60,6 +60,19 @@ export default function BadgerMart(props) {
         </View>
         <View>
             <Text>You have {totalQuantity} items costing you ${totalCost.toFixed(2)} in your cart!</Text>
+            <Button title="Place Order" disabled={totalQuantity===0} onPress={() => {
+                Alert.alert(
+                    "Order Confirmed!",
+                    `Your order contains ${totalQuantity} items and costs $${totalCost.toFixed(2)}!`
+                );
+
+                const emptyBasket = {};
+                items.forEach(product => {
+                    emptyBasket[product.name] = 0;
+                });
+                setBasket(emptyBasket);
+                setCurrentIndex(0);
+            }}></Button>
         </View>
         </>
     )}
